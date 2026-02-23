@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head}"></head>
+
+<body>
+
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:replace="~{layout/base :: alerts}"></div>
+
+        <a href="/" class="btn btn-secondary" style="margin-bottom: 2rem;"><i class="fas fa-arrow-left"></i> Volver al
+            catálogo</a>
+
+        <div class="product-detail">
+            <div class="detail-image">
+                <a th:href="@{${producto.imagenUrl}}" target="_blank">
+                    <img th:src="${producto.imagenUrl != null} ? @{${producto.imagenUrl}} : 'https://via.placeholder.com/500'"
+                        alt="Producto">
+                </a>
+            </div>
+            <div class="detail-info">
+                <span class="product-category" th:text="${producto.categoria}">CATEGORÍA</span>
+                <h1 th:text="${producto.nombre}">Nombre del Producto</h1>
+                <p class="product-price" th:text="${producto.precio} + ' €'">0.00 €</p>
+
+                <p th:text="${producto.descripcion}">Descripción del producto...</p>
+
+                <p><strong>Stock disponible:</strong> <span th:text="${producto.stock}">0</span></p>
+
+                <form th:action="@{/carrito/add/{id}(id=${producto.id})}" method="post" th:if="${producto.stock > 0}">
+                    <div style="margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem;">
+                        <label for="cantidad" style="font-family: var(--font-ui); font-weight: 600;">Cantidad:</label>
+                        <input type="number" id="cantidad" name="cantidad" value="1" min="1" th:max="${producto.stock}"
+                            style="width: 100px; background: var(--bg-warm); border: 1px solid var(--border-light); color: var(--text-rich); border-radius: var(--radius-md); padding: 0.75rem; font-family: var(--font-ui); font-weight: 600;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;"><i
+                            class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
+                </form>
+
+                <button disabled class="btn" th:if="${producto.stock == 0}">Agotado</button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+
+</html>

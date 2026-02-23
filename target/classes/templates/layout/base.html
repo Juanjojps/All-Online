@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-Online</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <header th:fragment="header">
+        <a href="/" class="logo"><i class="fas fa-store"></i> All-Online </a>
+        <nav>
+            <ul>
+                <li><a href="/">Catálogo</a></li>
+                <li>
+                    <a href="/carrito" class="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge" th:text="${@carrito.getCantidadTotal()}"
+                            th:if="${@carrito.getCantidadTotal() > 0}">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div th:fragment="alerts">
+        <div th:if="${mensaje}" class="alert alert-success">
+            <p th:text="${mensaje}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
+    </div>
+
+    <footer th:fragment="footer">
+        <p>&copy; 2026 All-Online. Hecho con esmero.</p> 
+    </footer>
+
+</body>
+
+</html>

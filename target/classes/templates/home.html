@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head}"></head>
+
+<body>
+
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:replace="~{layout/base :: alerts}"></div>
+
+        <h2>Catálogo de Productos</h2>
+
+        <form class="filters" action="/" method="get">
+            <input type="text" name="q" placeholder="Buscar productos..." th:value="${q}">
+
+            <select name="categoria">
+                <option value="">Categorías</option>
+                <option th:each="cat : ${categorias}" th:value="${cat}" th:text="${cat}"
+                    th:selected="${cat == categoriaSeleccionada}"></option>
+            </select>
+
+            <select name="sort">
+                <option value="">Ordenar por</option>
+                <option value="precio_asc" th:selected="${sortSeleccionado == 'precio_asc'}">Precio: Menor a Mayor
+                </option>
+                <option value="precio_desc" th:selected="${sortSeleccionado == 'precio_desc'}">Precio: Mayor a Menor
+                </option>
+            </select>
+
+            <button type="submit"><i class="fas fa-search"></i> Filtrar</button>
+            <a href="/" class="btn btn-secondary">Limpiar</a>
+        </form>
+
+        <div class="product-grid">
+            <div class="product-card" th:each="producto : ${productos}">
+                <a th:href="@{/producto/{id}(id=${producto.id})}">
+                    <img th:src="${producto.imagenUrl != null} ? @{${producto.imagenUrl}} : 'https://via.placeholder.com/250'"
+                        alt="Producto" class="product-image">
+                </a>
+                <div class="product-info">
+                    <span class="product-category" th:text="${producto.categoria}">CATEGORÍA</span>
+                    <h3 class="product-title" th:text="${producto.nombre}">Nombre del Producto</h3>
+                    <p class="product-price" th:text="${producto.precio} + ' €'">0.00 €</p>
+
+                    <a th:href="@{/producto/{id}(id=${producto.id})}" class="btn btn-primary btn-block">Ver Detalles</a>
+
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <span th:if="${producto.stock == 0}" class="product-category"
+                            style="color: var(--secondary-terracotta);">Agotado</span>
+                        <span th:if="${producto.stock > 0}"
+                            style="color: var(--text-soft); font-size: 0.85rem; font-family: var(--font-ui);"
+                            th:text="'En stock: ' + ${producto.stock}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(productos)}" style="text-align: center; padding: 2rem;">
+            <p>No se encontraron productos.</p>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+
+</html>

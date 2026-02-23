@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/base :: head}"></head>
+
+<body>
+
+    <header th:replace="~{layout/base :: header}"></header>
+
+    <main>
+        <div th:replace="~{layout/base :: alerts}"></div>
+
+        <h2>Tu Carrito de Compra</h2>
+
+        <div th:if="${#lists.isEmpty(carrito.lineas)}" style="text-align: center; padding: 6rem;">
+            <p style="color: var(--text-soft); margin-bottom: 2.5rem; font-size: 1.2rem;">Tu carrito está vacío.</p>
+            <a href="/" class="btn btn-primary">Ir de compras</a>
+        </div>
+
+        <div th:unless="${#lists.isEmpty(carrito.lineas)}">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="linea : ${carrito.lineas}">
+                        <td th:text="${linea.producto.nombre}">Producto</td>
+                        <td th:text="${linea.precioUnitario} + ' €'">0.00 €</td>
+                        <td>
+                            <form th:action="@{/carrito/update/{id}(id=${linea.producto.id})}" method="post"
+                                style="display: flex; align-items: center; gap: 0.75rem;">
+                                <input type="number" name="cantidad" th:value="${linea.cantidad}" min="1"
+                                    th:max="${linea.producto.stock + linea.cantidad}"
+                                    style="width: 100px; background: var(--bg-warm); border: 1px solid var(--border-light); color: var(--text-rich); border-radius: var(--radius-md); padding: 0.75rem; font-family: var(--font-ui); font-weight: 600;">
+                                <button type="submit" class="btn btn-secondary" style="padding: 0.75rem;"><i
+                                        class="fas fa-sync-alt"></i></button>
+                            </form>
+                        </td>
+                        <td th:text="${linea.precioUnitario * linea.cantidad} + ' €'"
+                            style="font-family: var(--font-heading); font-weight: 700; color: var(--primary-copper);">
+                            0.00 €</td>
+                        <td>
+                            <a th:href="@{/carrito/remove/{id}(id=${linea.producto.id})}" class="btn btn-secondary"
+                                style="color: #f87171;"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="cart-summary">
+                <h3>Total: <span th:text="${total} + ' €'" style="color: var(--primary-copper);">0.00 €</span></h3>
+                <div style="margin-top: 2.5rem; display: flex; gap: 1.5rem; justify-content: flex-end;">
+                    <a href="/" class="btn btn-secondary">Seguir Comprando</a>
+                    <a href="/carrito/checkout" class="btn btn-primary">Confirmar Pedido</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{layout/base :: footer}"></footer>
+
+</body>
+
+</html>
