@@ -1,6 +1,6 @@
-# 🛍️ All-Online - E-commerce Artesanal
+# 🛍️ All-Online 
 
-Bienvenido a **All-Online**, una plataforma de comercio electrónico diseñada con una estética "Warm Craft" (cálida y artesanal). Este proyecto está construido con **Java Spring Boot**, **Thymeleaf** y **MySQL**.
+Bienvenido a **All-Online**, una plataforma de comercio electrónico. Este proyecto está construido con **Java Spring Boot**, **Thymeleaf** y **MySQL**.
 
 ## 🚀 Cómo Ejecutar el Proyecto
 
