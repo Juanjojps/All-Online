@@ -5,7 +5,6 @@ Bienvenido a **All-Online**, una plataforma de comercio electrónico. Este proye
 ## 🚀 Cómo Ejecutar el Proyecto
 
 ### Requisitos Previos
-*   **Java 25** o superior.
 *   **Maven** (opcional, si se usa el `mvnw` incluido).
 *   **MySQL Server** en ejecución.
 
